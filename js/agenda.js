@@ -43,23 +43,17 @@ const doctores =  [doctor1, doctor2, doctor3, doctor4, doctor5];
 // interaccion con el usuario
 const horario = prompt("Ingrese M para ver los doctores de la mañana o T para los doctores de la tarde");
 let numeroDeDoctor;
-let numeroDoctoresM = 0;
-let numeroDoctoresT = 0;
-
-function contarDoctoresPorHorarios() {
-    for(let i = 0; i < doctores.length; i++) {
-        if(doctores[i].horario === "M" || doctores[i].horario === "m") {
-            numeroDoctoresM++;
-        } else {
-            numeroDoctoresT++;
-        }
-    }
-};
 
 function mostrarDoctoresPorHorarios() {
+  if (horario.toUpperCase() === "M") {
+    console.log("Doctores que trabajan a la mañana");
+  } else {
+    console.log("Doctores que trabajan a la tarde");
+  };
+
   for(let i=0; i < doctores.length; i++) {
     if (doctores[i].horario === horario.toUpperCase()) {
-        console.log(doctores[i].nombreDoc);
+        console.log(i + ": " + doctores[i].nombreDoc);
     }
   }
 };
@@ -70,16 +64,13 @@ function mostrarDoctores() {
     }
 };
 
-function sacarTurnoPorHorario() {
-    if(horario === "M" || horario === "m") {
-        numeroDeDoctor = Number(prompt("Ingrese un numero entre 1 y " + numeroDoctoresM + " indicando con que doctor quiere un turno"));
-    } else {
-        numeroDeDoctor = Number(prompt("Ingrese un numero entre 1 y " + numeroDoctoresT + " indicando con que doctor quiere un turno"));
-    };
+function sacarTurno() {
+    do {
+        numeroDeDoctor = Number(prompt("Ingrese el numero del doctor con quien desea un turno"));
+    } while (numeroDeDoctor < 0 || numeroDeDoctor >= doctores.length );
     doctores[numeroDeDoctor].ocupar();
 };
 
-contarDoctoresPorHorarios();
 mostrarDoctoresPorHorarios();
-sacarTurnoPorHorario();
+sacarTurno();
 mostrarDoctores();
